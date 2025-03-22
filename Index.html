@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>ConviSize - Smart Image Converter</title>
+  <link href="style.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo">
+        <h1>Convi<span>Size</span></h1>
+        <p>Smart Image Converter</p>
+      </div>
+      <div>
+        <button class="premium-btn">
+          Upgrade to <span>Premium</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <section class="main">
+    <div class="container">
+      <h2>Convert Your <span>Images</span></h2>
+      
+      <!-- Converter Layout -->
+      <div class="converter-container">
+        <!-- Input Box -->
+        <div class="converter-box">
+          <h3><i class="fas fa-download"></i> Input Image</h3>
+          <div class="upload-area" id="uploadArea">
+            <div class="icon">
+              <i class="fas fa-file-download"></i>
+            </div>
+            <p>Drag & drop your image here, or click to browse</p>
+            <button class="upload-btn" id="uploadButton">Choose File</button>
+            <input accept="image/*" class="hidden" id="fileInput" type="file"/>
+            <div class="format-tags">
+              <span>JPG</span>
+              <span>PNG</span>
+              <span>WEBP</span>
+              <span>SVG</span>
+              <span>GIF</span>
+              <span>TIFF</span>
+            </div>
+          </div>
+          
+          <!-- File Info Card -->
+          <div class="file-card hidden" id="fileCard">
+            <div class="file-header">
+              <span id="fileName">image.jpg</span>
+              <span class="tag" id="fileType">JPG</span>
+            </div>
+            <div class="file-details">
+              <img alt="Preview of the uploaded image" id="filePreview" src="https://placehold.co/80x80"/>
+              <div class="file-info">
+                <div class="info-row">
+                  <span class="info-label">Size:</span>
+                  <span class="info-value" id="fileSize">2.4 MB</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Dimensions:</span>
+                  <span class="info-value" id="fileDimensions">1920 x 1080 px</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Format:</span>
+                  <span class="info-value" id="fileFormat">JPEG</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Loading Indicator -->
+          <div class="loading hidden" id="loadingInput">
+            <div class="spinner"></div>
+            <p>Processing image...</p>
+          </div>
+        </div>
+        
+        <!-- Center Controls -->
+        <div class="controls-box">
+          <div class="control-group">
+            <label>Output Format</label>
+            <select id="formatSelect">
+              <option value="jpg">JPG</option>
+              <option value="png">PNG</option>
+              <option value="webp">WEBP</option>
+              <option value="gif">GIF</option>
+              <option value="tiff">TIFF</option>
+              <option value="svg">SVG</option>
+              <option value="pdf">PDF</option>
+            </select>
+          </div>
+          
+          <div class="control-group">
+            <label>Quality</label>
+            <input id="qualitySlider" max="100" min="1" type="range" value="90"/>
+            <div class="quality-labels">
+              <span>Low</span>
+              <span>Medium</span>
+              <span>High</span>
+            </div>
+          </div>
+          
+          <button class="convert-btn" disabled id="convertButton">
+            <span>Convert</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+        
+        <!-- Output Box -->
+        <div class="converter-box">
+          <h3><i class="fas fa-upload"></i> Output Image</h3>
+          <div class="output-container">
+            <div class="resize-controls">
+              <label><i class="fas fa-ruler-combined"></i> Resize</label>
+              <div class="dimension-inputs">
+                <div class="input-icon-wrapper">
+                  <i class="fas fa-arrows-alt-h"></i>
+                  <input id="widthInput" placeholder="Width" type="number"/>
+                </div>
+                <div class="input-icon-wrapper">
+                  <i class="fas fa-arrows-alt-v"></i>
+                  <input id="heightInput" placeholder="Height" type="number"/>
+                </div>
+              </div>
+              <div class="aspect-ratio">
+                <input checked id="aspectRatioCheck" type="checkbox"/>
+                <span>Maintain aspect ratio</span>
+              </div>
+            </div>
+            
+            <!-- Result Area -->
+            <div class="result-area" id="resultArea">
+              <p>Converted image will appear here</p>
+              <img alt="Result of the converted image" class="hidden" id="resultImage" src=""/>
+              <button class="download-btn hidden" id="downloadButton">
+                <span>Download</span>
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+            
+            <!-- Loading Indicator for Output -->
+            <div class="loading hidden" id="loadingOutput">
+              <div class="spinner"></div>
+              <p>Converting image...</p>
+            </div>
+            
+            <!-- File Info -->
+            <div class="result-info hidden" id="resultInfo">
+              <span id="resultSize">2.1 MB</span>
+              <span id="resultDimensions">1920 x 1080 px</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Batch Processing -->
+      <div class="batch-container hidden" id="batchContainer">
+        <div class="batch-header">
+          <div class="batch-title">
+            <i class="fas fa-sync-alt"></i>
+            <span>Batch Processing</span>
+          </div>
+          <div class="batch-toggle">
+            <input id="batchModeCheck" type="checkbox"/>
+            <span>Enable batch mode</span>
+          </div>
+        </div>
+        
+        <div class="batch-files" id="batchFiles">
+          <!-- Batch files will be added here dynamically -->
+        </div>
+        
+        <div class="batch-footer">
+          <div class="batch-stats">
+            <div class="stat">
+              <div class="stat-value" id="batchTotalFiles">0</div>
+              <div class="stat-label">Total Files</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value" id="batchProcessed">0</div>
+              <div class="stat-label">Processed</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value" id="batchSavings">0 KB</div>
+              <div class="stat-label">Size Savings</div>
+            </div>
+          </div>
+          <div class="batch-actions">
+            <button class="clear-btn" id="batchClearButton">Clear All</button>
+            <button class="process-btn" id="batchProcessButton">Process All</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 ConviSize. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
