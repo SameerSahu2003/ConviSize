@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConviSize - Smart Image Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <h1>Convi<span class="highlight">Size</span></h1>
+            <p class="tagline">Smart Image Converter</p>
+        </div>
+    </header>
+
+    <main>
+        <h2 class="main-title">Convert Your <span class="highlight">Images</span></h2>
+
+        <div class="converter-container">
+            <!-- Input Image Section -->
+            <div class="converter-panel">
+                <h3 class="panel-title"><span class="icon">⬇️</span> Input Image</h3>
+                <div class="drop-area" id="dropArea">
+                    <div class="drop-icon">
+                        <img src="icons/monitor-icon.svg" alt="Upload icon">
+                    </div>
+                    <p>Drag & drop your image here, or click to browse</p>
+                    <input type="file" id="fileInput" accept="image/*" multiple hidden>
+                    <button class="choose-file-btn" id="chooseFileBtn">Choose File</button>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="converter-panel settings-panel">
+                <div class="setting-group">
+                    <h3 class="setting-title">Output Format</h3>
+                    <select id="formatSelect" class="format-select">
+                        <option value="png">PNG</option>
+                        <option value="jpg" selected>JPG</option>
+                        <option value="webp">WEBP</option>
+                        <option value="gif">GIF</option>
+                        <option value="bmp">BMP</option>
+                    </select>
+                </div>
+
+                <div class="setting-group">
+                    <h3 class="setting-title">Quality</h3>
+                    <div class="quality-slider-container">
+                        <input type="range" id="qualitySlider" min="0" max="100" value="80" class="quality-slider">
+                        <div class="quality-labels">
+                            <span>Low</span>
+                            <span>Medium</span>
+                            <span>High</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="convertBtn" class="convert-btn">Convert <span class="arrow-icon">→</span></button>
+            </div>
+
+            <!-- Output Image Section -->
+            <div class="converter-panel">
+                <h3 class="panel-title"><span class="icon">⬇️</span> Output Image</h3>
+                
+                <div class="output-options">
+                    <div class="resize-options">
+                        <h4 class="option-title">Resize</h4>
+                        <div class="dimension-inputs">
+                            <div class="dimension-input">
+                                <span class="dimension-icon">↔️</span>
+                                <input type="number" id="widthInput" placeholder="Width" class="dimension-field">
+                                <span class="dimension-unit">px</span>
+                            </div>
+                            <div class="dimension-input">
+                                <span class="dimension-icon">↕️</span>
+                                <input type="number" id="heightInput" placeholder="Height" class="dimension-field">
+                                <span class="dimension-unit">px</span>
+                            </div>
+                        </div>
+                        <div class="aspect-ratio">
+                            <input type="checkbox" id="aspectRatio" checked>
+                            <label for="aspectRatio">Maintain aspect ratio</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-options">
+                        <h4 class="option-title">Image Filters</h4>
+                        <div class="filter-buttons">
+                            <div class="filter-option">
+                                <input type="radio" id="filterNone" name="filter" value="none" checked>
+                                <label for="filterNone">None</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="radio" id="filterGrayscale" name="filter" value="grayscale">
+                                <label for="filterGrayscale">Grayscale</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="radio" id="filterSepia" name="filter" value="sepia">
+                                <label for="filterSepia">Sepia</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="radio" id="filterInvert" name="filter" value="invert">
+                                <label for="filterInvert">Invert</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-container">
+                    <div id="outputPreview" class="output-preview">
+                        <img src="icons/download-icon.svg" alt="Result icon" class="result-icon">
+                        <p>Converted image will appear here</p>
+                    </div>
+                    <a id="downloadBtn" class="download-btn" download="converted-image" style="display: none;">Download</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2023 ConviSize. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Us</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

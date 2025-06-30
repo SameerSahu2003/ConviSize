@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ConviSize - Fast and easy image conversion and resizing tool">
+    <title>ConviSize - Smart Image Converter</title>
+    <link rel="stylesheet" href="styles-optimized.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Preload critical SVG icons -->
+    <link rel="preload" href="icons/upload-icon.svg" as="image" type="image/svg+xml">
+    <link rel="preload" href="icons/download-icon.svg" as="image" type="image/svg+xml">
+    <!-- Include jsPDF library for PDF conversion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo-container">
+                <h1>Convi<span class="highlight">Size</span></h1>
+                <p class="tagline">Smart Image Converter</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="site-main">
+        <div class="container">
+            <h2 class="main-title">Convert Your <span class="highlight">Images</span></h2>
+            
+            <div class="converter-wrapper">
+                <!-- Input Panel -->
+                <section class="panel input-panel">
+                    <h3 class="panel-title"><span class="icon">📁</span> Input Image</h3>
+                    <div class="drop-area" id="dropArea">
+                        <div class="drop-icon">
+                            <img src="icons/upload-icon.svg" alt="Upload" width="64" height="64" loading="lazy">
+                        </div>
+                        <p>Drag & drop your image here, or click to browse</p>
+                        <input type="file" id="fileInput" accept="image/*" multiple hidden>
+                        <button class="btn primary-btn" id="chooseFileBtn">Choose File</button>
+                    </div>
+                </section>
+                
+                <!-- Settings Panel -->
+                <section class="panel settings-panel">
+                    <h3 class="panel-title"><span class="icon">⚙️</span> Settings</h3>
+                    
+                    <div class="setting-group">
+                        <h4 class="setting-title">Output Format</h4>
+                        <select id="formatSelect" class="format-select">
+                            <option value="jpg" selected>JPG</option>
+                            <option value="png">PNG</option>
+                            <option value="webp">WEBP</option>
+                            <option value="gif">GIF</option>
+                            <option value="bmp">BMP</option>
+                            <option value="pdf">PDF</option>
+                        </select>
+                    </div>
+
+                    <div class="setting-group">
+                        <h4 class="setting-title">Quality</h4>
+                        <div class="quality-slider-container">
+                            <input type="range" id="qualitySlider" min="0" max="100" value="80" class="quality-slider">
+                            <div class="quality-labels">
+                                <span>Low</span>
+                                <span>Medium</span>
+                                <span>High</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h4 class="setting-title">Resize</h4>
+                        <div class="dimension-inputs">
+                            <div class="dimension-input">
+                                <span class="dimension-icon">↔️</span>
+                                <input type="number" id="widthInput" placeholder="Width" class="dimension-field">
+                                <span class="dimension-unit">px</span>
+                            </div>
+                            <div class="dimension-input">
+                                <span class="dimension-icon">↕️</span>
+                                <input type="number" id="heightInput" placeholder="Height" class="dimension-field">
+                                <span class="dimension-unit">px</span>
+                            </div>
+                        </div>
+                        <div class="aspect-ratio">
+                            <input type="checkbox" id="aspectRatio" checked>
+                            <label for="aspectRatio">Maintain aspect ratio</label>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h4 class="setting-title">Image Filters</h4>
+                        <div class="filter-buttons">
+                            <div class="filter-option">
+                                <input type="radio" id="filterNone" name="filter" value="none" checked>
+                                <label for="filterNone">None</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="radio" id="filterGrayscale" name="filter" value="grayscale">
+                                <label for="filterGrayscale">Grayscale</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="radio" id="filterSepia" name="filter" value="sepia">
+                                <label for="filterSepia">Sepia</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="radio" id="filterInvert" name="filter" value="invert">
+                                <label for="filterInvert">Invert</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="convertBtn" class="btn primary-btn convert-btn">Convert <span class="arrow-icon">→</span></button>
+                </section>
+                
+                <!-- Output Panel -->
+                <section class="panel output-panel">
+                    <h3 class="panel-title"><span class="icon">🖼️</span> Output Image</h3>
+                    
+                    <div class="preview-container">
+                        <div id="outputPreview" class="output-preview">
+                            <img src="icons/download-icon.svg" alt="Result" class="result-icon" width="64" height="64" loading="lazy">
+                            <p>Converted image will appear here</p>
+                        </div>
+                        <a id="downloadBtn" class="btn secondary-btn download-btn" download="converted-image" style="display: none;">Download</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2024 ConviSize. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-of-service.html">Terms of Service</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script-optimized.js" defer></script>
+</body>
+</html>
